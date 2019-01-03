@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TodayListPage } from '../today-list/today-list';
 import { CommingListPage } from '../comming-list/comming-list';
+import { OrderWorkPage } from '../order-work/order-work';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,7 @@ export class OrderListPage {
   }
 
   ionViewDidLoad() {
-    
+    // this.navCtrl.push(OrderWorkPage);
   }
 
 }

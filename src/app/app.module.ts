@@ -11,6 +11,7 @@ import { LoginPage } from '../pages/login/login';
 import { OrderListPage } from '../pages/order-list/order-list';
 import { TodayListPage } from '../pages/today-list/today-list';
 import { CommingListPage } from '../pages/comming-list/comming-list';
+import { OrderWorkPage } from '../pages/order-work/order-work';
 
 import { firebase_config } from './app.firebase.config';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -22,7 +23,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
     LoginPage,
     OrderListPage,
     TodayListPage,
-    CommingListPage
+    CommingListPage,
+    OrderWorkPage
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
     LoginPage,
     OrderListPage,
     TodayListPage,
-    CommingListPage
+    CommingListPage,
+    OrderWorkPage
   ],
   providers: [
     StatusBar,

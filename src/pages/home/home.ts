@@ -5,6 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../login/login';
 import { OrderListPage } from '../order-list/order-list';
+import { OrderWorkPage } from '../order-work/order-work';
 
 @Component({
   selector: 'page-home',
@@ -25,6 +26,7 @@ export class HomePage {
               ) {
                 this.pages = [
                   { title: 'Bandeja', component: HomePage, icon: 'ios-list-box-outline'},
+                  // { title: 'Orden', component: OrderWorkPage, icon: 'ios-list-box-outline' },
                   { title: 'Salir', component: null, icon:'ios-exit-outline' }
                 ];
                 this.afAuth.authState.take(1).subscribe(data => {
@@ -65,5 +67,9 @@ export class HomePage {
     }else{
       this.logout();
     }
+  }
+
+  public setOrderWork(page: any){
+    this.nav.push(page);
   }
 }

@@ -8,6 +8,10 @@ import { AngularFireModule } from  'angularfire2';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
+import { OrderListPage } from '../pages/order-list/order-list';
+import { TodayListPage } from '../pages/today-list/today-list';
+import { CommingListPage } from '../pages/comming-list/comming-list';
+
 import { firebase_config } from './app.firebase.config';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
@@ -15,7 +19,10 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
   declarations: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    OrderListPage,
+    TodayListPage,
+    CommingListPage
   ],
   imports: [
     BrowserModule,
@@ -27,7 +34,10 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    OrderListPage,
+    TodayListPage,
+    CommingListPage
   ],
   providers: [
     StatusBar,

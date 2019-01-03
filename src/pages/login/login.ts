@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { HomePage } from '../home/home';
@@ -22,23 +22,36 @@ export class LoginPage {
   constructor(public navCtrl: NavController
     , public navParams: NavParams
     , private afAuth: AngularFireAuth
+    , private alert: AlertController
     ) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    
   }
 
   async login(user: User){
-    try{
-       const response = this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
-       if(response){
-        this.navCtrl.setRoot(HomePage);
-       }else{
-         console.log('no response');
-       }
-    }catch(e){
-       console.log(e);
-    }
+    return  new Promise((resolve, reject) => {
+      this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
+      .then( userData => resolve(userData),
+      err => reject (err));
+    }).then((res) => {
+      this.navCtrl.setRoot(HomePage);
+    }).catch((err) => {
+      this.navCtrl.setRoot(LoginPage);
+      let alert = this.alerta('Scope App',err.message);
+      alert.present();
+      return;
+    });
+  }
+
+  alerta(title: string, msg: string){
+    return this.alert.create({
+      title: title,
+      message: msg,
+      buttons:[{
+        text: 'Ok'
+      }]
+    });
   }
 }

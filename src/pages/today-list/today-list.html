@@ -3,14 +3,14 @@
     <ion-title>today-list</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>      
+<ion-content>      
   <ion-list>
     <button  color='{{item.color}}' ion-item *ngFor="let item of lista" (click)="itemSelected(item)">
      <strong>{{item.title}}</strong>
      <br>
      {{item.subtitle}}
     <ion-icon name="ios-heart-outline" item-end (click)="setFavourite(item)"></ion-icon>
-    <ion-icon name="ios-arrow-forward" color='light' item-end></ion-icon>
+    <!-- <ion-icon name="ios-arrow-forward" color='light' item-end></ion-icon> -->
     </button>      
   </ion-list>      
 </ion-content>

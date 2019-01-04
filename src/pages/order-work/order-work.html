@@ -1,20 +1,12 @@
-<!--
-  Generated template for the OrderWorkPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar color="{{((item.color =='normal')?'primary':item.color)}}">
     <ion-title>
         {{item.title}}  
         <!-- <ion-icon name='ios-bookmark-outline' item-end></ion-icon> -->
-        
     </ion-title>
-    <ion-buttons start>
+    <ion-buttons end>
       <button ion-button icon-only>
-        <ion-icon name='ios-bookmark-outline'></ion-icon>
+        <ion-icon name='md-more'></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -23,5 +15,69 @@
 
 
 <ion-content padding>
+
+        <ion-navbar color='white'>
+            <ion-buttons start>
+              <button ion-button icon-only item-start>
+                  <ion-icon color='primary' ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+              </button>
+            </ion-buttons>
+
+            <ion-grid>
+              <ion-row>
+                <ion-col col-12 class='title' text-center>
+                  Arroz Flor 5kg 
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col col-12 class='subtitle' text-center>
+                  Sku 1 de 21
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            
+            <ion-buttons end>
+              <button ion-button icon-only item-end>
+                  <ion-icon color='primary' ios="ios-arrow-forward" md="md-arrow-forward"></ion-icon>
+              </button>
+            </ion-buttons>
+        </ion-navbar>
+      
+        <ion-navbar color='white' text-center>
+          
+          <ion-img width="32" height="32" src="assets/imgs/noimage.png"></ion-img>
+          
+          <ion-buttons end>
+            <button ion-button color='secondary' outline small>Agr.</button>
+          </ion-buttons>
+          <ion-buttons end>
+            <button ion-button color='danger' small outline>Elim.</button>
+          </ion-buttons>
+        </ion-navbar>
+      
+      <ion-item>
+        <ion-label class='ion-label'>Cant. Inicial</ion-label>
+        <ion-input type='number'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class='ion-label'>Cant. Final</ion-label>
+        <ion-input type='number'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class='ion-label'># Caras</ion-label>
+        <ion-input type='number'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class='ion-label'>Ped. Sugerido</ion-label>
+        <ion-input type='number'></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label class='ion-label'>Obs.</ion-label>
+          <ion-textarea></ion-textarea>
+        </ion-item>
+      <button margin-top ion-button icon-start full block>
+          <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+         Grabar
+      </button>      
 
 </ion-content>

@@ -39,7 +39,8 @@ $colors: (
   danger:     #f07878,
   warning:    #f0d888,
   light:      #e9e7e7,
-  dark:       #222
+  dark:       #222,
+  white:      #fff
 );
 
 
@@ -87,3 +88,8 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+$toolbar-ios-title-font-size:	1.6rem;
+$toolbar-ios-title-text-align: center;
+
+$toolbar-md-title-font-size: 1.6rem;

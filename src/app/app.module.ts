@@ -4,7 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireModule } from  'angularfire2';
-
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
@@ -15,6 +15,7 @@ import { OrderWorkPage } from '../pages/order-work/order-work';
 
 import { firebase_config } from './app.firebase.config';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { OrderService } from '../services/order-service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebase_config),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFirestoreModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -45,6 +47,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
   providers: [
     StatusBar,
     SplashScreen,
+    OrderService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

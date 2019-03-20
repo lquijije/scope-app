@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../login/login';
 import { OrderListPage } from '../order-list/order-list';
 import { OrderWorkPage } from '../order-work/order-work';
+import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'page-home',

@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Nav, App, NavParams } from 'ionic-angular';
 import { OrderWorkPage } from '../order-work/order-work';
 import { HomePage } from '../home/home';
+import { OrderService } from '../../services/order-service';
 /**
  * Generated class for the TodayListPage page.
  *
@@ -52,11 +53,14 @@ export class TodayListPage {
   ];
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public app: App) {
+              public app: App,
+              public os: OrderService) {
   }
 
   ionViewDidLoad() {
-    
+    this.os.getOrders().subscribe(data => {
+      console.log(data);
+    });
   }
 
   itemSelected(item: any) {

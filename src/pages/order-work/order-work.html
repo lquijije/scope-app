@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="{{((item.color =='normal')?'primary':item.color)}}">
     <ion-title>
-        {{item.title}}  
+        <small>{{item.cadena.nombre}} | {{item.local.nombre}}</small>
         <!-- <ion-icon name='ios-bookmark-outline' item-end></ion-icon> -->
     </ion-title>
     <ion-buttons end>
@@ -10,74 +10,77 @@
       </button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
-
-
-<ion-content padding>
-
-        <ion-navbar color='white'>
-            <ion-buttons start>
-              <button ion-button icon-only item-start>
-                  <ion-icon color='primary' ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
-              </button>
-            </ion-buttons>
-
-            <ion-grid>
-              <ion-row>
-                <ion-col col-12 class='title' text-center>
-                  Arroz Flor 5kg 
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col col-12 class='subtitle' text-center>
-                  Sku 1 de 21
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-            
-            <ion-buttons end>
-              <button ion-button icon-only item-end>
-                  <ion-icon color='primary' ios="ios-arrow-forward" md="md-arrow-forward"></ion-icon>
-              </button>
-            </ion-buttons>
-        </ion-navbar>
+<ion-content>
       
-        <ion-navbar color='white' text-center>
-          
-          <ion-img width="32" height="32" src="assets/imgs/noimage.png"></ion-img>
+      <ion-navbar color='white'>
+          <ion-buttons start>
+            <button ion-button icon-only item-start (click)="back()">
+                <ion-icon color='primary' ios="ios-arrow-back" md="md-arrow-back" ></ion-icon>
+            </button>
+          </ion-buttons>
+
+          <ion-grid>
+            <ion-row>
+              <ion-col col-12 text-center>
+                <strong>{{item['sku'][index].descripcion}} {{item['sku'][index].presentacion}}</strong>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12 class='subtitle' text-center>
+                <label *ngIf="item['sku'][index].sabor!=''" >Sabor: {{item['sku'][index].sabor}} - </label>Sku {{index+1}} de {{item['sku'].length}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
           
           <ion-buttons end>
-            <button ion-button color='secondary' outline small>Agr.</button>
+            <button ion-button icon-only item-end (click)="forward()">
+                <ion-icon color='primary' ios="ios-arrow-forward" md="md-arrow-forward"></ion-icon>
+            </button>
           </ion-buttons>
-          <ion-buttons end>
-            <button ion-button color='danger' small outline>Elim.</button>
-          </ion-buttons>
-        </ion-navbar>
+      </ion-navbar>
+    
+      <ion-navbar color='white' text-center>
+        
+        <ion-img width="32" height="32" src="assets/imgs/noimage.png"></ion-img>
+        
+        <ion-buttons end>
+          <button ion-button color='secondary' outline small (click)="openImagePickerCrop()">Agr.</button>
+        </ion-buttons>
+        <ion-buttons end>
+          <button ion-button color='danger' small outline>Elim.</button>
+        </ion-buttons>
+      </ion-navbar>
       
-      <ion-item>
-        <ion-label class='ion-label'>Cant. Inicial</ion-label>
-        <ion-input type='number'></ion-input>
+      <ion-item color='white'>
+        <ion-label class='ion-label' color="primary">Cant. Inicial</ion-label>
+        <ion-input type='number' [(ngModel)]="item['sku'][index].inicial"></ion-input>
+      </ion-item>
+      <ion-item color='white'>
+        <ion-label class='ion-label' color="primary">Cant. Final</ion-label>
+        <ion-input type='number' [(ngModel)]="item['sku'][index].final"></ion-input>
+      </ion-item>
+      <ion-item color='white'>
+        <ion-label class='ion-label' color="primary"># Caras</ion-label>
+        <ion-input type='number' [(ngModel)]="item['sku'][index].caras"></ion-input>
+      </ion-item>
+      <ion-item color='white'>
+        <ion-label class='ion-label' color="primary">Ped. Sugerido</ion-label>
+        <ion-input type='number' [(ngModel)]="item['sku'][index].sugerido"></ion-input>
+      </ion-item>
+      <ion-item color='white'>
+        <ion-label class='ion-label' color="primary">Obs.</ion-label>
+        <ion-textarea [(ngModel)]="item['sku'][index].observacion"></ion-textarea>
       </ion-item>
       <ion-item>
-        <ion-label class='ion-label'>Cant. Final</ion-label>
-        <ion-input type='number'></ion-input>
+        <button color="{{((item['sku'][index].saved)?'saved':'primary')}}" margin-top ion-button icon-start full block (click)="saveOne(item['sku'][index])">
+            <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+          {{((item['sku'][index].saved)?'Actualizar':'Grabar')}}
+        </button> 
       </ion-item>
-      <ion-item>
-        <ion-label class='ion-label'># Caras</ion-label>
-        <ion-input type='number'></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label class='ion-label'>Ped. Sugerido</ion-label>
-        <ion-input type='number'></ion-input>
-      </ion-item>
-      <ion-item>
-          <ion-label class='ion-label'>Obs.</ion-label>
-          <ion-textarea></ion-textarea>
-        </ion-item>
-      <button margin-top ion-button icon-start full block>
-          <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
-         Grabar
-      </button>      
-
+      <ion-fab bottom right padding>
+        <button ion-fab color="secondary" (click)="finalizar()">
+          <ion-icon name='md-checkmark'></ion-icon>
+        </button>
+      </ion-fab>
 </ion-content>

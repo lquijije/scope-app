@@ -1,8 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Nav, App, NavParams } from 'ionic-angular';
 import { OrderWorkPage } from '../order-work/order-work';
-import { HomePage } from '../home/home';
 import { OrderService } from '../../services/order-service';
+import { IWorkOrder } from '../../models/order-work';
+import { IUser } from '../../models/user';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { UserService } from '../../services/user-service';
 /**
  * Generated class for the TodayListPage page.
  *
@@ -19,60 +22,58 @@ export class TodayListPage {
   @ViewChild(Nav) nav: Nav;
 
   lockFav: boolean;
-  lista: Array<any> = [
-    {
-      title: 'Supermaxi | Centenario',
-      subtitle: '10h00.',
-      color: 'danger'
-    },
-    {
-      title: 'Supermaxi | Policentro',
-      subtitle: '12h00.',
-      color: 'danger'
-    },
-    {
-      title: 'Comisariato | Riocentro Sur',
-      subtitle: '13h00',
-      color: 'warning'
-    },
-    {
-      title: 'Comisariato | Centro',
-      subtitle: '15h00',
-      color: 'normal'
-    },
-    {
-      title: 'Comisariato | Via Daule',
-      subtitle: '16h00',
-      color: 'normal'
-    },
-    {
-      title: 'Comisariato | Americas',
-      subtitle: '17h00',
-      color: 'normal'
-    }
-  ];
+  lista: IWorkOrder [] = [];
+  userEmail: string = '';
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public app: App,
-              public os: OrderService) {
+              public os: OrderService,
+              public us: UserService,
+    private afAuth: AngularFireAuth) {
+    
   }
 
   ionViewDidLoad() {
-    this.os.getOrders().subscribe(data => {
-      console.log(data);
+    this.afAuth.authState.subscribe(data => {
+      if (this.afAuth.auth.currentUser) {
+        this.userEmail = this. afAuth.auth.currentUser.email;
+        this.us.getUserByEmail(this.userEmail).subscribe((user) => {
+          this.os.getOrdersByUserId({
+              id: user[0].id,
+              nombre: user[0].nombre
+            }).subscribe(data => {
+            const hoy = new Date().toISOString().substr(0, 10);
+            this.lista = data;
+            this.lista = this.lista.filter((item: IWorkOrder) => {
+              return item.visita.toString().substr(0, 10) == hoy;
+            });
+            this.lista = this.lista.sort((a, b) => {
+              return (new Date(a.visita) > new Date(b.visita)) ? 1 : -1;
+            });
+            this.lista.forEach(i => {
+              const now = new Date().getTime();
+              const vis = new Date(i.visita).getTime();
+              if (now > vis){
+                i['color'] = 'danger';
+              }else{
+                i['color'] = 'white';
+              }
+            });
+          });
+        });
+      }
     });
   }
 
-  itemSelected(item: any) {
+  itemSelected(item: IWorkOrder) {
     if (!this.lockFav){
-      this.app.getRootNav().push(OrderWorkPage, { item: item });
+      this.app.getRootNav().push(OrderWorkPage, { item: item });      
     }else{
       this.lockFav = false;
     }
   }
-  setFavourite(item: any) {
+  setFavourite(item: IWorkOrder) {
     this.lockFav = true;
     console.log('favorito');
   }
-
 }

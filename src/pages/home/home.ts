@@ -30,14 +30,16 @@ export class HomePage {
                   // { title: 'Orden', component: OrderWorkPage, icon: 'ios-list-box-outline' },
                   { title: 'Salir', component: null, icon:'ios-exit-outline' }
                 ];
-                this.afAuth.authState.take(1).subscribe(data => {
-                  this.userAuth = afAuth.auth.currentUser.displayName;
+                this.afAuth.authState.subscribe(data => {
+                  if (afAuth.auth.currentUser){
+                    this.userAuth = afAuth.auth.currentUser.displayName;
+                  }
                 });
   }
 
   ionViewDidLoad(){
     this.initializeApp();
-    this.afAuth.authState.take(1).subscribe(data => {
+    this.afAuth.authState.subscribe(data => {
       if(data  && data.email && data.uid){  
         this.toast.create({
           message: `Bienvenido ${data.displayName}`,

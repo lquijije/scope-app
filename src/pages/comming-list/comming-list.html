@@ -3,12 +3,13 @@
     <ion-title>comming-list</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content>
   <ion-list>
+    <p padding *ngIf="(lista.length==0)">No hay &oacute;rdenes pr&oacute;ximas</p>
     <button color='{{item.color}}' ion-item *ngFor="let item of lista" (click)="itemSelected(item)">
-      <strong>{{item.title}}</strong>
+      <small><strong>{{item.cadena.nombre}} | {{item.local.nombre}}</strong></small>
       <br>
-      {{item.subtitle}}
+      <small>{{item.visita | date: 'fullDate'}} {{item.visita | date: 'H:mm'}}</small>
       <ion-icon name="ios-heart-outline" item-end (click)="setFavourite(item)"></ion-icon>
       <!-- <ion-icon name="ios-arrow-forward" color='light' item-end></ion-icon> -->
     </button>

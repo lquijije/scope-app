@@ -5,12 +5,18 @@
 </ion-header>
 <ion-content>      
   <ion-list>
-    <button  color='{{item.color}}' ion-item *ngFor="let item of lista" (click)="itemSelected(item)">
-     <strong>{{item.title}}</strong>
-     <br>
-     {{item.subtitle}}
-    <ion-icon name="ios-heart-outline" item-end (click)="setFavourite(item)"></ion-icon>
-    <!-- <ion-icon name="ios-arrow-forward" color='light' item-end></ion-icon> -->
+    <p padding *ngIf="(lista.length==0)">No hay &oacute;rdenes para hoy</p>
+    <button color={{item.color}} ion-item *ngFor="let item of lista" (click)="itemSelected(item)">
+      <small>
+        <strong>
+          {{item.cadena.nombre}} | {{item.local.nombre}}
+        </strong>
+      </small>
+      <br>      
+      <small>
+        Orden #: {{item.numero}} | Hoy {{item.visita | date: 'H:mm'}}
+      </small>
+      <ion-icon color="primary" name="ios-heart-outline" item-end (click)="setFavourite(item)"></ion-icon>
     </button>      
   </ion-list>      
 </ion-content>

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { LOCALE_ID, ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -16,6 +16,13 @@ import { OrderWorkPage } from '../pages/order-work/order-work';
 import { firebase_config } from './app.firebase.config';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { OrderService } from '../services/order-service';
+import { UserService } from '../services/user-service';
+import { ImageService } from '../services/image-service';
+import { registerLocaleData } from '@angular/common';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+
+import es from '@angular/common/locales/es';
+registerLocaleData(es);
 
 @NgModule({
   declarations: [
@@ -33,6 +40,7 @@ import { OrderService } from '../services/order-service';
     AngularFireModule.initializeApp(firebase_config),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    AngularFireStorageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -48,7 +56,10 @@ import { OrderService } from '../services/order-service';
     StatusBar,
     SplashScreen,
     OrderService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    UserService,
+    ImageService,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: LOCALE_ID, useValue: 'es-Ar' } 
   ]
 })
 export class AppModule {}

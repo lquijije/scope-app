@@ -4,7 +4,6 @@ import { TodayListPage } from './today-list';
 
 @NgModule({
   declarations: [
-    TodayListPage,
   ],
   imports: [
     IonicPageModule.forChild(TodayListPage),

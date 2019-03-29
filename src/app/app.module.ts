@@ -12,7 +12,7 @@ import { OrderListPage } from '../pages/order-list/order-list';
 import { TodayListPage } from '../pages/today-list/today-list';
 import { CommingListPage } from '../pages/comming-list/comming-list';
 import { OrderWorkPage } from '../pages/order-work/order-work';
-
+import { ImagePicker } from '@ionic-native/image-picker';
 import { firebase_config } from './app.firebase.config';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { OrderService } from '../services/order-service';
@@ -58,8 +58,9 @@ registerLocaleData(es);
     OrderService,
     UserService,
     ImageService,
+    ImagePicker,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    { provide: LOCALE_ID, useValue: 'es-Ar' } 
+    { provide: LOCALE_ID, useValue: 'es-Ec' } 
   ]
 })
 export class AppModule {}

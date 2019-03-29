@@ -4,7 +4,6 @@ import { CommingListPage } from './comming-list';
 
 @NgModule({
   declarations: [
-    CommingListPage,
   ],
   imports: [
     IonicPageModule.forChild(CommingListPage),

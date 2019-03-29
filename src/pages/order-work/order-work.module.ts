@@ -4,7 +4,6 @@ import { OrderWorkPage } from './order-work';
 
 @NgModule({
   declarations: [
-    OrderWorkPage,
   ],
   imports: [
     IonicPageModule.forChild(OrderWorkPage),

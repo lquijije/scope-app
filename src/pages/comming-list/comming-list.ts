@@ -1,6 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, Nav, App, NavParams } from 'ionic-angular';
-import { OrderWorkPage } from '../order-work/order-work';
 import { OrderService } from '../../services/order-service';
 import { UserService } from '../../services/user-service';
 import { AngularFireAuth } from 'angularfire2/auth';

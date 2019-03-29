@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, normalizeURL } from 'ionic-angular';
 import { IWorkOrder } from '../../models/order-work';
 import { OrderService } from '../../services/order-service';
 import { ImageService } from '../../services/image-service';
+import { ImagePicker } from '@ionic-native/image-picker';
 /**
  * Generated class for the OrderWorkPage page.
  *
@@ -18,11 +19,14 @@ import { ImageService } from '../../services/image-service';
 export class OrderWorkPage {
   item;
   index: number = 0;
+  imageResponse: any;
+  options: any;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private  os: OrderService,
     public toast: ToastController,
-    public imgs: ImageService) {
+    public imgs: ImageService,
+    private imagePicker: ImagePicker) {
     this.item = this.navParams.data.item;
   }
   ionViewDidLoad() {
@@ -41,6 +45,7 @@ export class OrderWorkPage {
         e['caras'] = 0;
         e['sugerido'] = 0;
         e['observacion'] = '';
+        e['imageUrl'] ='';
        });
       this.item['sku'][0].current = true;
       this.index = 0;
@@ -54,6 +59,7 @@ export class OrderWorkPage {
         e['caras'] = 0;
         e['sugerido'] = 0;
         e['observacion'] = '';
+        e['imageUrl'] = '';
       });
     }
     // if (this.item['estado'].nombre == 'INICIADA' ||
@@ -96,7 +102,6 @@ export class OrderWorkPage {
     }
     this.item['sku'][this.index].saved = true;
     this.os.updateOrder(this.item).then(r =>{
-      
       this.toast.create({
         message: `Se grabó correctamente`,
         duration: 3000
@@ -129,43 +134,55 @@ export class OrderWorkPage {
       }).present();
     }
   }
-  openImagePickerCrop() {
-    /*this.imagePicker.hasReadPermission().then(
+  
+  uploadImageToFirebase(image) {
+    image = normalizeURL(image);
+
+    //uploads img to firebase storage
+    this.imgs.uploadImage(image)
+      .then(photoURL => {
+        this.item['sku'][this.index].imageUrl = photoURL;
+        this.toast.create({
+          message: 'Image was updated successfully',
+          duration: 3000 
+        }).present();
+      })
+  }
+  getImages() {
+    this.options = {
+      width: 200,
+      quality: 25,
+      outputType: 1
+    };
+    this.imageResponse = [];
+    this.imagePicker.getPictures(this.options).then((results) => {
+      for (var i = 0; i < results.length; i++) {
+        this.imageResponse.push('data:image/jpeg;base64,' + results[i]);
+      }
+    }, (err) => {
+      alert(err);
+    });
+  }
+  openImagePicker(){
+    this.imagePicker.hasReadPermission().then(
       (result) => {
-        if (result == false) {
+        if(result == false){
           // no callbacks required as this opens a popup which returns async
           this.imagePicker.requestReadPermission();
         }
-        else if (result == true) {
+        else if(result == true){
           this.imagePicker.getPictures({
             maximumImagesCount: 1
           }).then(
             (results) => {
               for (var i = 0; i < results.length; i++) {
-                this.cropService.crop(results[i], { quality: 75 }).then(
-                  newImage => {
-                    this.uploadImageToFirebase(newImage);
-                  },
-                  error => console.error("Error cropping image", error)
-                );
+                this.uploadImageToFirebase(results[i]);
               }
             }, (err) => console.log(err)
           );
         }
       }, (err) => {
         console.log(err);
-      });*/
-  }
-  uploadImageToFirebase(image) {
-    //image = normalizeURL(image);
-
-    //uploads img to firebase storage
-    this.imgs.uploadImage(image)
-      .then(photoURL => {
-        this.toast.create({
-          message: 'Image was updated successfully',
-          duration: 3000 
-        }).present();
-      })
+      });
   }
 }

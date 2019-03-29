@@ -4,7 +4,6 @@ import { OrderListPage } from './order-list';
 
 @NgModule({
   declarations: [
-    OrderListPage,
   ],
   imports: [
     IonicPageModule.forChild(OrderListPage),

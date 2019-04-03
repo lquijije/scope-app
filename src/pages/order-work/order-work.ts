@@ -35,6 +35,10 @@ export class OrderWorkPage {
         id: 'LT4ytmo1DoCbXR3cj8k2',
         nombre: 'INICIADA'
       }
+      const d = new Date();
+      const datestring = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
+            ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+      this.item['iniciada'] = datestring;
       this.os.updateOrder(this.item)
         .catch(err => { });
       this.item['sku'].forEach(e => {
@@ -99,6 +103,10 @@ export class OrderWorkPage {
         id: 'rYPNu37CXYaD2EHDGS6u', 
         nombre: 'EN PROGRESO'
       }
+      const d = new Date();
+      const datestring = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
+            ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+      this.item['inprogress'] = datestring;
     }
     this.item['sku'][this.index].saved = true;
     this.os.updateOrder(this.item).then(r =>{
@@ -120,6 +128,10 @@ export class OrderWorkPage {
         id: 'kq5JBF6UyK26E2S7fEz1',
         nombre: 'FINALIZADA'
       };
+      const d = new Date();
+            const datestring = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
+            ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+      this.item['finalizada'] = datestring;
       this.os.updateOrder(this.item).then(r => {
         this.toast.create({
           message: `Se finalizó la orden`,

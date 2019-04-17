@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="{{((item.color =='normal')?'primary':item.color)}}">
+  <ion-navbar color="{{((item.color =='white')?'primary':item.color)}}">
     <ion-title>
         <small>{{item.cadena.nombre}} | {{item.local.nombre}}</small>
         <!-- <ion-icon name='ios-bookmark-outline' item-end></ion-icon> -->
@@ -14,12 +14,11 @@
 <ion-content>
       
       <ion-navbar color='white'>
-          <ion-buttons start>
+          <ion-buttons end>
             <button ion-button icon-only item-start (click)="back()">
                 <ion-icon color='primary' ios="ios-arrow-back" md="md-arrow-back" ></ion-icon>
             </button>
           </ion-buttons>
-
           <ion-grid>
             <ion-row>
               <ion-col col-12 text-center>
@@ -40,47 +39,62 @@
           </ion-buttons>
       </ion-navbar>
     
-      <ion-navbar color='white' text-center>
-        
-        <ion-img width="32" height="32" src="assets/imgs/noimage.png"></ion-img>
-        
-        <ion-buttons end>
-          <button ion-button color='secondary' outline small (click)="openImagePicker()">Agr.</button>
-        </ion-buttons>
-        <ion-buttons end>
-          <button ion-button color='danger' small outline>Elim.</button>
-        </ion-buttons>
-      </ion-navbar>
-      
+      <ion-item color='white'>
+        <ion-label color="primary">Bloqueado</ion-label>
+        <ion-toggle color="primary" [(ngModel)]="lockValue" (ionChange)="lockItem($event)"></ion-toggle>
+      </ion-item>
       <ion-item color='white'>
         <ion-label class='ion-label' color="primary">Cant. Inicial</ion-label>
-        <ion-input type='number' [(ngModel)]="item['sku'][index].inicial"></ion-input>
+        <ion-input type='number' [(ngModel)]="item['sku'][index].inicial" [disabled]="lockValue"></ion-input>
       </ion-item>
       <ion-item color='white'>
         <ion-label class='ion-label' color="primary">Cant. Final</ion-label>
-        <ion-input type='number' [(ngModel)]="item['sku'][index].final"></ion-input>
+        <ion-input type='number' [(ngModel)]="item['sku'][index].final" [disabled]="lockValue"></ion-input>
       </ion-item>
       <ion-item color='white'>
         <ion-label class='ion-label' color="primary"># Caras</ion-label>
-        <ion-input type='number' [(ngModel)]="item['sku'][index].caras"></ion-input>
+        <ion-input type='number' [(ngModel)]="item['sku'][index].caras" [disabled]="lockValue"></ion-input>
       </ion-item>
       <ion-item color='white'>
         <ion-label class='ion-label' color="primary">Ped. Sugerido</ion-label>
-        <ion-input type='number' [(ngModel)]="item['sku'][index].sugerido"></ion-input>
+        <ion-input type='number' [(ngModel)]="item['sku'][index].sugerido" [disabled]="lockValue"></ion-input>
       </ion-item>
       <ion-item color='white'>
         <ion-label class='ion-label' color="primary">Obs.</ion-label>
-        <ion-textarea [(ngModel)]="item['sku'][index].observacion"></ion-textarea>
+        <ion-textarea [(ngModel)]="item['sku'][index].observacion" [disabled]="lockValue"></ion-textarea>
       </ion-item>
+      <ion-list>
+        <ion-item-sliding *ngFor="let img of item['fotos']">
+          <ion-item>
+            <ion-thumbnail item-start>
+              <img style="width: 15vh;height: 12vh;" src={{img.url}} />
+            </ion-thumbnail>
+            <h3 class="text-primary">Foto</h3>
+            <p text-wrap><small>Nombre: {{img.nombre}}</small></p>
+            <p text-wrap><small>Tomada: {{img.fecha}}</small></p>
+          </ion-item>
+          <ion-item-options side="left">
+            <button ion-button (click)="delete(img)" color="danger">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
       <ion-item>
-        <button color="{{((item['sku'][index].saved)?'saved':'primary')}}" margin-top ion-button icon-start full block (click)="saveOne(item['sku'][index])">
+        <button color="{{((item['sku'][index].saved)?'saved':'primary')}}" margin-top ion-button icon-start full block (click)="saveOne()" [disabled]="lockValue">
             <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
           {{((item['sku'][index].saved)?'Actualizar':'Grabar')}}
         </button> 
       </ion-item>
       <ion-fab bottom right padding>
-        <button ion-fab color="secondary" (click)="finalizar()">
+        <button ion-fab marging color='primary' outline small (click)="takePhoto()">
+          <ion-icon name='md-camera'></ion-icon>
+        </button>
+      </ion-fab>
+      <ion-fab bottom left padding>
+        <button ion-fab marging color="primary" (click)="finalize()">
           <ion-icon name='md-checkmark'></ion-icon>
         </button>
       </ion-fab>
+      
 </ion-content>

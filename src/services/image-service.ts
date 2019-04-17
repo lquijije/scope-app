@@ -23,18 +23,30 @@ export class ImageService {
         img.src = imageUri;
     };
 
-    uploadImage(imageURI) {
+    // uploadImage(imageURI) {
+    //     return new Promise<any>((resolve, reject) => {
+    //         let storageRef = firebase.storage().ref();
+    //         let imageRef = storageRef.child('image').child('imageName');
+    //         this.encodeImageUri(imageURI, function (image64) {
+    //             imageRef.putString(image64, 'data_url')
+    //                 .then(snapshot => {
+    //                     resolve(snapshot.downloadURL)
+    //                 }, err => {
+    //                     reject(err);
+    //                 })
+    //         })
+    //     })
+    // }
+    svImage(image64: string, name: string) {
         return new Promise<any>((resolve, reject) => {
-            let storageRef = firebase.storage().ref();
-            let imageRef = storageRef.child('image').child('imageName');
-            this.encodeImageUri(imageURI, function (image64) {
-                imageRef.putString(image64, 'data_url')
-                    .then(snapshot => {
-                        resolve(snapshot.downloadURL)
-                    }, err => {
-                        reject(err);
-                    })
+        let storageRef = firebase.storage().ref();
+        let imageRef = storageRef.child('scope-app').child('fotos').child(name);
+        imageRef.putString(image64, 'data_url')
+            .then(snapshot => {
+                resolve(snapshot.ref.getDownloadURL())
+            }, err => {
+                reject(err);
             })
-        })
+        });
     }
 }

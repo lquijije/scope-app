@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Nav, App, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, Nav, App, NavParams, LoadingController } from 'ionic-angular';
 import { OrderWorkPage } from '../order-work/order-work';
 import { OrderService } from '../../services/order-service';
 import { IWorkOrder } from '../../models/order-work';
@@ -24,16 +24,22 @@ export class TodayListPage {
   lockFav: boolean;
   lista: IWorkOrder [] = [];
   userEmail: string = '';
+  loading: any;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public app: App,
               public os: OrderService,
               public us: UserService,
-    private afAuth: AngularFireAuth) {
+    private afAuth: AngularFireAuth,
+    private loadCrtl: LoadingController) {
     
   }
 
   ionViewDidLoad() {
+    this.loading = this.loadCrtl.create({
+      content: 'Cargando...'
+    });
+    this.loading.present();
     this.afAuth.authState.subscribe(data => {
       if (this.afAuth.auth.currentUser) {
         this.userEmail = this. afAuth.auth.currentUser.email;
@@ -42,11 +48,11 @@ export class TodayListPage {
               id: user[0].id,
               nombre: user[0].nombre
             }).subscribe(data => {
+              this.loading.dismiss();
             const d = new Date();
             const datestring = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
             ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
             const hoy = datestring.substr(0, 10);
-            console.log(hoy);
             this.lista = data;
             this.lista = this.lista.filter((item: IWorkOrder) => {
               return item.visita.toString().substr(0, 10) == hoy;
@@ -65,6 +71,8 @@ export class TodayListPage {
             });
           });
         });
+      } else {
+        this.loading.dismiss();
       }
     });
   }
@@ -78,6 +86,5 @@ export class TodayListPage {
   }
   setFavourite(item: IWorkOrder) {
     this.lockFav = true;
-    console.log('favorito');
   }
 }

@@ -67,7 +67,7 @@
         <ion-item-sliding *ngFor="let img of item['fotos']">
           <ion-item>
             <ion-thumbnail item-start>
-              <img style="width: 15vh;height: 12vh;" src={{img.url}} />
+              <img style="width: 12vh;height: 12vh;" src={{img.url}} />
             </ion-thumbnail>
             <h3 class="text-primary">Foto</h3>
             <p text-wrap><small>Nombre: {{img.nombre}}</small></p>
@@ -80,12 +80,10 @@
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>
-      <ion-item>
-        <button color="{{((item['sku'][index].saved)?'saved':'primary')}}" margin-top ion-button icon-start full block (click)="saveOne()" [disabled]="lockValue">
-            <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
-          {{((item['sku'][index].saved)?'Actualizar':'Grabar')}}
-        </button> 
-      </ion-item>
+      <button color="{{((item['sku'][index].saved)?'saved':'primary')}}" margin-top ion-button round icon-start full block (click)="saveOne()" [disabled]="lockValue">
+        <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+        {{((item['sku'][index].saved)?'ACTUALIZAR':'GRABAR')}}
+      </button>
       <ion-fab bottom right padding>
         <button ion-fab marging color='primary' outline small (click)="takePhoto()">
           <ion-icon name='md-camera'></ion-icon>

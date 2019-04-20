@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, Nav, App, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, Nav, App, NavParams, LoadingController } from 'ionic-angular';
 import { OrderService } from '../../services/order-service';
 import { UserService } from '../../services/user-service';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -20,16 +20,21 @@ export class CommingListPage {
   lockFav: boolean;
   lista: IWorkOrder [] = [];
   userEmail: string = '';
+  loading: any;
   constructor(public navCtrl: NavController,
                public navParams: NavParams,
                public app: App,
                public os: OrderService,
                public us: UserService,
-    private afAuth: AngularFireAuth) {
+    private afAuth: AngularFireAuth,
+    private loadCrtl: LoadingController) {
   }
 
   ionViewDidLoad() {
-
+    this.loading = this.loadCrtl.create({
+      content: 'Cargando...'
+    });
+    this.loading.present();
     this.afAuth.authState.subscribe(data => {
       if (this.afAuth.auth.currentUser) {
         this.userEmail = this.afAuth.auth.currentUser.email;
@@ -38,6 +43,7 @@ export class CommingListPage {
             id: user[0].id,
             nombre: user[0].nombre
           }).subscribe(data => {
+            this.loading.dismiss();
             const hoy = new Date(new Date().toISOString().substr(0, 10)).getTime();
             this.lista = data;
             this.lista = this.lista.filter((item: any) => {

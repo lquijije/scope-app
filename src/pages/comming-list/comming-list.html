@@ -10,7 +10,7 @@
       <small><strong>{{item.cadena.nombre}} | {{item.local.nombre}}</strong></small>
       <br>
       <small>{{item.visita | date: 'fullDate'}} {{item.visita | date: 'H:mm'}}</small>
-      <ion-icon name="ios-heart-outline" item-end (click)="setFavourite(item)"></ion-icon>
+      <ion-icon *ngIf="(item.prioridad == 'ALTA')" color="warning" name="md-alert" item-end (click)="setFavourite(item)"></ion-icon>
       <!-- <ion-icon name="ios-arrow-forward" color='light' item-end></ion-icon> -->
     </button>
   </ion-list>

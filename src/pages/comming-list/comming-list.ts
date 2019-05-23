@@ -39,15 +39,19 @@ export class CommingListPage {
       if (this.afAuth.auth.currentUser) {
         this.userEmail = this.afAuth.auth.currentUser.email;
         this.us.getUserByEmail(this.userEmail).subscribe((user) => {
+          this.loading.dismiss();
           this.os.getOrdersByUserId({
             id: user[0].id,
             nombre: user[0].nombre
           }).subscribe(data => {
             this.loading.dismiss();
-            const hoy = new Date(new Date().toISOString().substr(0, 10)).getTime();
+            const d = new Date();
+            const datestring = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
+            ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+            const hoy = datestring.substr(0, 10);
             this.lista = data;
             this.lista = this.lista.filter((item: any) => {
-              return new Date(item.visita.toString().substr(0, 10)).getTime() > hoy;
+              return new Date(item.visita.toString().substr(0, 10)).getTime() > new Date(hoy).getTime();
             });
             this.lista = this.lista.sort((a, b) => {
               return (new Date(a.visita) > new Date(b.visita)) ? 1 : -1;

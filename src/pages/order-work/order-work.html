@@ -27,7 +27,8 @@
             </ion-row>
             <ion-row>
               <ion-col col-12 class='subtitle' text-center>
-                <label *ngIf="item['sku'][index].sabor!=''" >Sabor: {{item['sku'][index].sabor}} - </label>Sku {{index+1}} de {{item['sku'].length}}
+                <label style="font-size: 1.2rem;" *ngIf="item['sku'][index].sabor!=''" >Sabor: {{item['sku'][index].sabor}} - </label>
+                <label style="font-size: 1.2rem;">Sku {{item['sku'][index].orden}} de {{item['sku'].length}}</label>
               </ion-col>
             </ion-row>
           </ion-grid>

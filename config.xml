@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>ScopeApp</name>
+<widget id="scope.app.002" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Scope Trade Management</name>
     <description>Trade Marketing app. Private use only.</description>
-    <author email="lquijije@outlook.com" href="http://www.luisquijije.com/">Luis Quijije</author>
+    <author email="erick@scope.com.ec" href="https://scope.com.ec/">Scope </author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

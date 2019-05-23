@@ -44,6 +44,7 @@ export class TodayListPage {
       if (this.afAuth.auth.currentUser) {
         this.userEmail = this. afAuth.auth.currentUser.email;
         this.us.getUserByEmail(this.userEmail).subscribe((user) => {
+          this.loading.dismiss();
           this.os.getOrdersByUserId({
               id: user[0].id,
               nombre: user[0].nombre

@@ -309,13 +309,13 @@ export class OrderWorkPage {
       const datestring = d.getFullYear() + ("0" + (d.getMonth() + 1)).slice(-2) + ("0" + d.getDate()).slice(-2) + "_" + ("0" + d.getHours()).slice(-2) + ("0" + d.getMinutes()).slice(-2) + ("0" + d.getSeconds()).slice(-2);
       const date = d.getFullYear() + '-' + ("0" + (d.getMonth() + 1)).slice(-2) + '-' + ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ':' + ("0" + d.getMinutes()).slice(-2) + ':' + ("0" + d.getSeconds()).slice(-2);
       const imgName = this.item['numero'] + '_' + datestring;
-      this.loading = this.loadCrtl.create({
-        content: 'Subiendo Img...'
-      });
-      this.loading.present();
+      // this.loading = this.loadCrtl.create({
+      //   content: 'Subiendo Img...'
+      // });
+      // this.loading.present();
       this.imgs.svImage(base64Image, imgName)
         .then(photoURL => {
-          this.loading.dismiss();
+          // this.loading.dismiss();
           this.item['fotos'].push(
             {
               nombre: imgName,
@@ -345,6 +345,7 @@ export class OrderWorkPage {
       this.item['sku'][this.index].observacion = 'Bloqueado por ' + this.item['mercaderista'].nombre;
     } else {
       this.item['sku'][this.index].bloqueado = false;
+      this.item['sku'][this.index].observacion = '';
     }
     this.saveOneLock();
   }

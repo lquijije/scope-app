@@ -247,11 +247,11 @@ export class OrderWorkPage {
     });
     if (!pending) {
       let dialog = this.alert.create({
-        title: 'Agregar Novedades',
+        title: 'Agregar Competencia',
         inputs: [
           {
             name: 'novelty',
-            placeholder: 'Novedades'
+            placeholder: 'Competencia'
           }
         ],
         buttons: [

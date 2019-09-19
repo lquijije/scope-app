@@ -62,7 +62,7 @@
       </ion-item>
       <ion-item color='white'>
         <ion-label class='ion-label' color="primary">Obs.</ion-label>
-        <ion-textarea [(ngModel)]="item['sku'][index].observacion" [disabled]="lockValue"></ion-textarea>
+        <ion-textarea [(ngModel)]="item['sku'][index].observacion"></ion-textarea>
       </ion-item>
       <ion-list>
         <ion-item-sliding *ngFor="let img of item['fotos']">
@@ -81,7 +81,7 @@
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>
-      <button color="{{((item['sku'][index].saved)?'saved':'primary')}}" margin-top ion-button round icon-start full block (click)="saveOne()" [disabled]="lockValue">
+      <button color="{{((item['sku'][index].saved)?'saved':'primary')}}" margin-top ion-button round icon-start full block (click)="saveOne()">
         <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
         {{((item['sku'][index].saved)?'ACTUALIZAR':'GRABAR')}}
       </button>

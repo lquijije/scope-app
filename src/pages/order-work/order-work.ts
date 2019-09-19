@@ -167,18 +167,20 @@ export class OrderWorkPage {
   }
   saveOne(){   
     const i = this.item['sku'][this.index];
-    if (i.inicial.trim() == '') {
-      this.alerta('Scope App', 'Ingrese Cantidad Inicial').present();
-      return false;
-    }
-    if (i.final.trim() == '') {
-      this.alerta('Scope App', 'Ingrese Cantidad Final').present();
-      return false;
-    }
+    if(!this.lockValue) {  
+      if (i.inicial.trim() == '') {
+        this.alerta('Scope App', 'Ingrese Cantidad Inicial').present();
+        return false;
+      }
+      if (i.final.trim() == '') {
+        this.alerta('Scope App', 'Ingrese Cantidad Final').present();
+        return false;
+      }
 
-    if (i.caras.trim() == '') {
-      this.alerta('Scope App', 'Ingrese # de Caras').present();
-      return false;
+      if (i.caras.trim() == '') {
+        this.alerta('Scope App', 'Ingrese # de Caras').present();
+        return false;
+      }
     }
     if (i.sugerido.trim() == '') {
       i.sugerido = 0;
@@ -342,12 +344,14 @@ export class OrderWorkPage {
       this.item['sku'][this.index].final = '';
       this.item['sku'][this.index].caras = '';
       this.item['sku'][this.index].sugerido = '';
-      this.item['sku'][this.index].observacion = 'Bloqueado por ' + this.item['mercaderista'].nombre;
+      if(this.item['sku'][this.index].observacion == ''){
+        this.item['sku'][this.index].observacion = 'Bloqueado por ' + this.item['mercaderista'].nombre;
+      }      
     } else {
       this.item['sku'][this.index].bloqueado = false;
       this.item['sku'][this.index].observacion = '';
     }
-    this.saveOneLock();
+    // this.saveOneLock();
   }
   alerta(title: string, msg: string) {
     return this.alert.create({

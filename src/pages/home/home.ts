@@ -7,6 +7,7 @@ import { LoginPage } from '../login/login';
 import { OrderListPage } from '../order-list/order-list';
 import { OrderWorkPage } from '../order-work/order-work';
 import 'rxjs/add/operator/take';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @Component({
   selector: 'page-home',
@@ -23,7 +24,8 @@ export class HomePage {
               private afAuth: AngularFireAuth,
               public platform: Platform, 
               public statusBar: StatusBar, 
-              public splashScreen: SplashScreen
+              public splashScreen: SplashScreen,
+              private geolocation: Geolocation
               ) {
                 this.pages = [
                   { title: 'Bandeja', component: HomePage, icon: 'ios-list-box-outline'},
@@ -39,6 +41,9 @@ export class HomePage {
 
   ionViewDidLoad(){
     this.initializeApp();
+    let options = {timeout: 20000, maximumAge: 20000, enableHighAccuracy: false};
+    this.geolocation.getCurrentPosition(options).then((resp) => {
+    }).catch((er) => {}); 
     this.afAuth.authState.subscribe(data => {
       if(data  && data.email && data.uid){  
         this.toast.create({
@@ -54,7 +59,7 @@ export class HomePage {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.statusBar.styleBlackTranslucent();
       this.splashScreen.hide();
     });
   }

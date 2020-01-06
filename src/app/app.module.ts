@@ -21,6 +21,7 @@ import { ImageService } from '../services/image-service';
 import { registerLocaleData } from '@angular/common';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { Camera } from '@ionic-native/camera';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import es from '@angular/common/locales/es';
 registerLocaleData(es);
@@ -60,6 +61,7 @@ registerLocaleData(es);
     UserService,
     ImageService,
     ImagePicker,
+    Geolocation,
     Camera,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     { provide: LOCALE_ID, useValue: 'es-Ec' } 

@@ -6,6 +6,8 @@ import { ImageService } from '../../services/image-service';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera, CameraOptions  } from '@ionic-native/camera';
 import { Subscription } from 'rxjs';
+import { Geolocation } from '@ionic-native/geolocation';
+
 /**
  * Generated class for the OrderWorkPage page.
  *
@@ -35,7 +37,8 @@ export class OrderWorkPage {
     private imagePicker: ImagePicker,
     private camera: Camera,
     private alert: AlertController,
-    private loadCrtl: LoadingController) {
+    private loadCrtl: LoadingController,
+    private geolocation: Geolocation) {
     this.item = this.navParams.data.item;
   }
   ionViewDidLoad() {
@@ -89,6 +92,19 @@ export class OrderWorkPage {
       const datestring = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
             ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
       this.item['iniciada'] = datestring;
+/*       this.item['geolocation_iniciada'] = {
+        latitude: '123456',
+        longitude: '654321'
+      }; */
+      let options = {timeout: 20000, maximumAge: 20000, enableHighAccuracy: false};
+      this.geolocation.getCurrentPosition(options).then((resp) => {
+        this.item['geolocation_iniciada'] = {
+          latitude: resp.coords.latitude,
+          longitude: resp.coords.longitude
+        };
+       }).catch((er) => {
+         // this.alerta("ScopeError",er.message);
+       }); 
       this.os.updateOrder(this.item)
         .catch(err => { });
       this.item['sku'].forEach(e => {
@@ -100,6 +116,7 @@ export class OrderWorkPage {
         e['sugerido'] = '';
         e['observacion'] = '';
        });
+       
       this.item['sku'][0].current = true;
       this.index = 0;
     }
@@ -248,6 +265,15 @@ export class OrderWorkPage {
       }
     });
     if (!pending) {
+      let options = {timeout: 20000, maximumAge: 20000, enableHighAccuracy: false};
+      this.geolocation.getCurrentPosition(options).then((resp) => {
+        this.item['geolocation_finalizada'] ={
+          latitude: resp.coords.latitude,
+          longitude: resp.coords.longitude
+        };
+      }).catch((error) => {
+        // this.alerta("ScopeError",error.message);
+      }); 
       let dialog = this.alert.create({
         title: 'Agregar Competencia',
         inputs: [

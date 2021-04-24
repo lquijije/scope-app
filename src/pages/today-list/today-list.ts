@@ -45,11 +45,16 @@ export class TodayListPage {
         this.userEmail = this. afAuth.auth.currentUser.email;
         this.us.getUserByEmail(this.userEmail).subscribe((user) => {
           this.loading.dismiss();
+          const d0 = new Date();
+            const datestring0 = d0.getFullYear() + "-" + ("0"+(d0.getMonth()+1)).slice(-2) + "-" +
+            ("0" + d0.getDate()).slice(-2) + " " + ("0" + d0.getHours()).slice(-2) + ":" + ("0" + d0.getMinutes()).slice(-2);
+            const hoy0 = datestring0.substr(0, 10);
           this.os.getOrdersByUserId({
               id: user[0].id,
               nombre: user[0].nombre
-            }).subscribe(data => {
+            }, hoy0, true).subscribe(data => {
               this.loading.dismiss();
+            
             const d = new Date();
             const datestring = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
             ("0" + d.getDate()).slice(-2) + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);

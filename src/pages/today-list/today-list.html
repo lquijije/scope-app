@@ -14,7 +14,7 @@
       </small>
       <br>      
       <small>
-        {{item.sku[0].ds_cliente}} | Hoy {{item.visita | date: 'H:mm'}}
+        {{item.sku[0].ds_cliente.substring(0,35)}} | Hoy {{item.visita | date: 'H:mm'}}
       </small>
       <ion-icon *ngIf="(item.prioridad == 'ALTA')" color="warning" name="md-alert" item-end (click)="setFavourite(item)"></ion-icon>
     </button>      

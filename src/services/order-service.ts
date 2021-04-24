@@ -30,28 +30,59 @@ export class OrderService{
       );
   }
 
-  getOrdersByUserId(user: any) {
+  getOrdersByUserId(user: any, fecha: any, hoy: boolean) {
     let ordCollectionCreated: AngularFirestoreCollection<IWorkOrder>;
     let ordCollectionInitialize: AngularFirestoreCollection<IWorkOrder>;
     let ordCollectionInProgress: AngularFirestoreCollection<IWorkOrder>;
-
-    ordCollectionCreated = this.afs.collection<IWorkOrder>('work-orders',
+    var desde = fecha  + ' 00:00:00';
+    var hasta = fecha  + ' 23:59:59';
+    if(hoy) {
+      ordCollectionCreated = this.afs.collection<IWorkOrder>('work-orders',
       ref => ref.where('estado', '==', {
         id: 'eNyPUyFqo8SrwkKvDAgD',
         nombre: 'CREADA'
-      }).where('mercaderista', '==', user));
+      }).where('mercaderista', '==', user)
+      .where('visita', '>=', desde)
+      .where('visita', '<=', hasta));
 
-    ordCollectionInitialize = this.afs.collection<IWorkOrder>('work-orders',
+      ordCollectionInitialize = this.afs.collection<IWorkOrder>('work-orders',
+        ref => ref.where('estado', '==', {
+          id: 'LT4ytmo1DoCbXR3cj8k2',
+          nombre: 'INICIADA'
+        }).where('mercaderista', '==', user)
+        .where('visita', '>=', desde)
+        .where('visita', '<=', hasta));
+      
+      ordCollectionInProgress = this.afs.collection<IWorkOrder>('work-orders',
+        ref => ref.where('estado', '==', {
+          id: 'rYPNu37CXYaD2EHDGS6u',
+          nombre: 'EN PROGRESO'
+        }).where('mercaderista', '==', user)
+        .where('visita', '>=', desde)
+        .where('visita', '<=', hasta));
+    } else {
+      ordCollectionCreated = this.afs.collection<IWorkOrder>('work-orders',
       ref => ref.where('estado', '==', {
-        id: 'LT4ytmo1DoCbXR3cj8k2',
-        nombre: 'INICIADA'
-      }).where('mercaderista', '==', user));
+        id: 'eNyPUyFqo8SrwkKvDAgD',
+        nombre: 'CREADA'
+      }).where('mercaderista', '==', user)
+      .where('visita', '>', desde));
+
+      ordCollectionInitialize = this.afs.collection<IWorkOrder>('work-orders',
+        ref => ref.where('estado', '==', {
+          id: 'LT4ytmo1DoCbXR3cj8k2',
+          nombre: 'INICIADA'
+        }).where('mercaderista', '==', user)
+        .where('visita', '>', desde));
+      
+      ordCollectionInProgress = this.afs.collection<IWorkOrder>('work-orders',
+        ref => ref.where('estado', '==', {
+          id: 'rYPNu37CXYaD2EHDGS6u',
+          nombre: 'EN PROGRESO'
+        }).where('mercaderista', '==', user)
+        .where('visita', '>', desde));
+    }
     
-    ordCollectionInProgress = this.afs.collection<IWorkOrder>('work-orders',
-      ref => ref.where('estado', '==', {
-        id: 'rYPNu37CXYaD2EHDGS6u',
-        nombre: 'EN PROGRESO'
-      }).where('mercaderista', '==', user));
 
     this.combineOrders = Observable
       .combineLatest(
